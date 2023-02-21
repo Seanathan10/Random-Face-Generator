@@ -336,6 +336,16 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
 
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent,
+        systemNavigationBarContrastEnforced: false,
+        systemNavigationBarIconBrightness: widget.isDark ? Brightness.light : Brightness.dark,
+
+        systemNavigationBarColor: Colors.black.withOpacity( 0.0 )
+      ),
+    );
+
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -350,6 +360,24 @@ class _HomeState extends State<Home> {
             icon: (widget.isDark) ? Icons.light_mode : Icons.dark_mode,
             onTap: () {
               Hive.box(kHiveSystemPrefs).put("darkMode", !widget.isDark);
+
+              if( widget.isDark ) {
+                SystemChrome.setSystemUIOverlayStyle(
+                const SystemUiOverlayStyle(
+
+                  systemNavigationBarIconBrightness: Brightness.dark,
+                ),
+              );
+              } else {
+                SystemChrome.setSystemUIOverlayStyle(
+                const SystemUiOverlayStyle(
+
+                  systemNavigationBarIconBrightness: Brightness.light,
+                ),
+              );
+              }
+
+              
             },
           ),
         ],

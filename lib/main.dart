@@ -7,9 +7,10 @@ import 'package:random_face_generator/home.dart';
 
 void main() async {
   SystemChrome.setSystemUIOverlayStyle(
-    const SystemUiOverlayStyle(
+    SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
-        systemNavigationBarColor: Colors.transparent
+        systemNavigationBarContrastEnforced: false,
+        systemNavigationBarColor: Colors.transparent.withOpacity( 0.0 )
       ),
   );
   SystemChrome.setEnabledSystemUIMode( SystemUiMode.edgeToEdge );
@@ -38,6 +39,7 @@ class RandomFaceGeneratorApp extends StatelessWidget {
           home: Home(
             isDark: isDark,
           ),
+          
         );
       },
     );
