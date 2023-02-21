@@ -13,6 +13,8 @@ import 'package:random_face_generator/widgets/neumorphic_elevated_button.dart';
 import 'package:random_face_generator/widgets/neumorphic_icon_button.dart';
 import 'package:random_face_generator/widgets/neumorphic_radio_button.dart';
 
+import 'package:flutter/services.dart';
+
 class Home extends StatefulWidget {
   final bool isDark;
   const Home({Key? key, required this.isDark}) : super(key: key);
@@ -332,6 +334,8 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -352,27 +356,53 @@ class _HomeState extends State<Home> {
       ),
       body: LayoutBuilder(
         builder: (context, constraints) {
-          if (constraints.maxWidth > constraints.maxHeight) {
-            return Padding(
-              padding: const EdgeInsets.all(16),
-              child: Row(
-                children: [
-                  _imageView(),
-                  const SizedBox(width: 30),
-                  _optionsView(),
-                ],
-              ),
-            );
+          if (MediaQuery.of(context).orientation == Orientation.portrait) {
+            if (constraints.maxWidth > constraints.maxHeight) {
+              return Padding(
+                padding: const EdgeInsets.all(16),
+                child: Row(
+                  children: [
+                    _imageView(),
+                    const SizedBox(width: 30),
+                    _optionsView(),
+                  ],
+                ),
+              );
+            } else {
+              return Padding(
+                padding: const EdgeInsets.fromLTRB(16, 20, 16, 0),
+                child: Column(
+                  children: [
+                    _imageView(),
+                    _optionsView(),
+                  ],
+                ),
+              );
+            }
           } else {
-            return Padding(
-              padding: const EdgeInsets.fromLTRB(16, 20, 16, 0),
-              child: Column(
-                children: [
-                  _imageView(),
-                  _optionsView(),
-                ],
-              ),
-            );
+            if (constraints.maxWidth > constraints.maxHeight) {
+              return Padding(
+                padding: const EdgeInsets.only(
+                    left: 48, top: 16, right: 48, bottom: 16),
+                child: Row(
+                  children: [
+                    _imageView(),
+                    const SizedBox(width: 30),
+                    _optionsView(),
+                  ],
+                ),
+              );
+            } else {
+              return Padding(
+                padding: const EdgeInsets.fromLTRB(16, 20, 16, 0),
+                child: Column(
+                  children: [
+                    _imageView(),
+                    _optionsView(),
+                  ],
+                ),
+              );
+            }
           }
         },
       ),
